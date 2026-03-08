@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="card-footer bg-transparent border-0 mt-auto">
-                            <a href="{% url 'reviews:review_detail' review.id %}" class="btn btn-primary w-100">Veja mais</a>
+                            <a href="{{ review.get_absolute_url }}" class="btn btn-primary w-100">Veja mais</a>
                         </div>
                     </div>
                 </div>

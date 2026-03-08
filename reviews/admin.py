@@ -6,6 +6,7 @@ from .models import Review
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'rating', 'author')
+    list_display = ('title', 'status', 'slugfied_title', 'rating', 'author')
     list_filter = ('status', 'rating',)
     search_fields = ('title', 'body', 'author__username',)
+    prepopulated_fields = {"slugfied_title": ["title"]}
