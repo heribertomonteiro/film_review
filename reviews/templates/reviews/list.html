@@ -1,1 +1,37 @@
-<h1>Heriberto</h1>
+{% extends 'reviews/base.html' %}
+{% block title %}List{% endblock %}
+
+{% block content %}
+    <style>
+        .rating-inline { display: inline-flex; align-items: center; }
+        .rating-inline .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.5rem; }
+        .rating-inline .icon-star { width: 1em; height: 1em; fill: #ffc107; flex: 0 0 auto; }
+    </style>
+    <div class="container mt-4">
+        <h1>Film Reviews</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for review in reviews %}
+                <div class="col d-flex">
+                    <div class="card h-100 d-flex flex-column w-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ review.title }}</h5>
+                            <p class="card-text">{{ review.body | truncatechars:100 }}</p>
+                            <p class="card-text"><small class="text-muted">Publicado em {{ review.published_at|date:"d M Y" }}</small></p>
+                            <div class="rating-inline">
+                                <span class="badge bg-secondary">
+                                    <svg class="icon-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path d="M12 .587l3.668 7.431L23.4 9.75l-5.7 5.56L19.335 24 12 19.897 4.665 24l1.635-8.69L.6 9.75l7.732-1.732L12 .587z" />
+                                    </svg>
+                                    {{ review.rating }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 mt-auto">
+                            <a href="{% url 'reviews:review_detail' review.id %}" class="btn btn-primary w-100">Veja mais</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

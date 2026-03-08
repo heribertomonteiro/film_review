@@ -1,0 +1,10 @@
+{% extends 'reviews/base.html' %}
+{% block title %}Detalhes{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>{{ review.title }}</h1>
+        <p>{{ review.body }}</p>
+        <a href="{% url 'reviews:list_reviews' %}" class="btn btn-secondary">Voltar para a lista</a>
+    </div>
+{% endblock %}
