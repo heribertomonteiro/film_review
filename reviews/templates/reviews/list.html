@@ -6,11 +6,26 @@
         .rating-inline { display: inline-flex; align-items: center; }
         .rating-inline .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.5rem; }
         .rating-inline .icon-star { width: 1em; height: 1em; fill: #ffc107; flex: 0 0 auto; }
+
+        /* Paginação fixa no rodapé */
+        .pagination-fixed-bottom {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.95);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 -1px 6px rgba(0,0,0,0.08);
+            z-index: 1030;
+        }
+
+        /* Espaço inferior para evitar sobreposição do conteúdo */
+        .with-fixed-pagination { padding-bottom: 4.5rem; }
     </style>
-    <div class="container mt-4">
+    <div class="container mt-4 with-fixed-pagination">
         <h1>Film Reviews</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for review in reviews %}
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+            {% for review in reviews_page %}
                 <div class="col d-flex">
                     <div class="card h-100 d-flex flex-column w-100">
                         <div class="card-body">
@@ -32,6 +47,30 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+
+        <div class="pagination-fixed-bottom">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if reviews_page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ reviews_page.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="?page={{ reviews_page.previous_page_number }}">{{ reviews_page.previous_page_number }}</a></li>
+                    {% endif %}
+                    <li class="page-item disabled"><a class="page-link" href="#">{{ reviews_page.number }} of {{ reviews_page.paginator.num_pages }}</a></li>
+                    {% if reviews_page.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ reviews_page.next_page_number }}">{{ reviews_page.next_page_number }}</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ reviews_page.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
     </div>
 {% endblock %}
