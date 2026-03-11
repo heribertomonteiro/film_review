@@ -34,6 +34,8 @@ class Review(models.Model):
 
     published = PublishedManager()
     objects = models.Manager()
+    comments: models.Manager['Comment']
+
 
     def get_absolute_url(self):
         from django.urls import reverse

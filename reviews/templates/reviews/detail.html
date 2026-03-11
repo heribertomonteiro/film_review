@@ -6,5 +6,34 @@
         <h1>{{ review.title }}</h1>
         <p>{{ review.body }}</p>
         <a href="{% url 'reviews:list_reviews' %}" class="btn btn-secondary">Voltar para a lista</a>
+
+        {% for comment in comments %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <p class="card-text">Comentário #{{ forloop.counter }}</p>
+                    <h5 class="card-title">{{ comment.user_name }}</h5>
+                    <p class="card-text">{{ comment.message }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Nenhum comentário ainda.</h5>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Deixe um comentário</h5>
+                <form action="{% url 'reviews:add_comment' review.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+
     </div>
 {% endblock %}
